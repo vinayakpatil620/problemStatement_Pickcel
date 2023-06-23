@@ -1,0 +1,72 @@
+<body>
+    <div class="container-fluid wrapper">
+
+        <h1 class="mark">
+            <mark>NDTV News Feeds</mark>
+        </h1>
+        <br>
+        <h3>Top Stories</h3>
+        <div class="display">
+            <button (click)="openModal(fav,{})" class="btn">Show Favourite</button>
+        </div>
+
+        <table>
+            <tr>
+                <th>Image</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Link</th>
+                <th>Action</th>
+            </tr>
+            <tr *ngFor="let item of newsItems" class="pointer">
+                <td (click)="openModal(template,item)"><img [src]="item.enclosure.link" width="200"></td>
+                <td (click)="openModal(template,item)" style="width: 428px;"><strong>{{item.title}}</strong></td>
+                <td (click)="openModal(template,item)">{{item.description}}</td>
+                <td style="width: 100px;"> <a href="{{ item.link }}" target="_blank">Read More</a></td>
+                <td><button class="btn btn-primary" (click)="addFaourite(item)">Add Favourite</button></td>
+            </tr>
+        </table>
+
+
+        <ng-template #template>
+            <div class="modal-header">
+                <h4 class="modal-title pull-left">Top News</h4>
+                <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+                    <span aria-hidden="true" class="visually-hidden">&times;</span>
+                </button>
+            </div>
+            <div style="text-align: right;margin: 10px 10px 0 0;"> <button *ngIf="singleItem" class="btn btn-primary"
+                    style="width: 200px;" (click)="addFaourite(singleItem)">Add to Favourite</button></div>
+
+            <div class="modal-body" style="display: flex; flex-direction: column;">
+                <img [src]="singleItem.enclosure.link" style="width: auto; height: 250px;">
+                <h4 class="blue">{{ singleItem.title }}</h4>
+                <p>{{ singleItem.description }}</p>
+                <br>
+                <p>{{ singleItem.content }}</p>
+            </div>
+        </ng-template>
+
+        <ng-template #fav>
+            <div>
+                <div style="width: 200%; margin-left: -200px;">
+                    <h3 class="active">Favorite News Feeds</h3>
+                    <table style="background: wheat;">
+                        <tr>
+                            <th>Image</th>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Link</th>
+                        </tr>
+                        <tr *ngFor="let item of favArray ">
+                            <td><img [src]="item.enclosure.link" width="200"></td>
+                            <td>{{item.title}}</td>
+                            <td>{{item.description}}</td>
+                            <td style="width: 96px;"> <a href="{{ item.link }}" target="_blank">Read More</a></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </ng-template>
+    </div>
+</body>
